@@ -1,5 +1,6 @@
 from scipy.integrate import solve_ivp
 from PIL import Image
+import line_profiler
 
 def debug(msg, a, b):
   print(msg + ':', a)
@@ -48,7 +49,7 @@ def geodesic_integrator(M, termination_conditions):
   def integrate(v, s_max):
     p = v.parent().base_point()
     init = [ float(x) for x in X(p) + tuple(v) ]
-    return solve_ivp(eqn, (0, s_max), init, events=events)
+    return solve_ivp(eqn, (0, s_max), init, events=events) # 78% of total time
 
   return integrate
 
@@ -82,7 +83,7 @@ def local_color(v, s_max):
   else:
     raise Exception('An error occurred during integration.')
 
-WIDTH = 40
+WIDTH = 50
 
 def pixel_to_vector(i, j):
   # return value is not necessarily a unit vector
@@ -90,11 +91,15 @@ def pixel_to_vector(i, j):
   z, x, y = WIDTH/4, i - WIDTH/2 + 0.5, j - WIDTH/2 + 0.5
   return (z * basis[1] + x * basis[2] + y * basis[3]) / WIDTH
 
-colors = []
-s_max = 40
-for row in range(WIDTH):
-  for col in range(WIDTH):
-    v = pixel_to_vector(col, row)
-    colors.append(local_color(v, s_max))
-img = Image.frombytes('L', (WIDTH, WIDTH), b''.join(colors))
-img.save('black_hole.png')
+@line_profiler.profile
+def main():
+  colors = []
+  s_max = 40
+  for row in range(WIDTH):
+    for col in range(WIDTH):
+      v = pixel_to_vector(col, row)
+      colors.append(local_color(v, s_max))
+  img = Image.frombytes('L', (WIDTH, WIDTH), b''.join(colors))
+  img.save('black_hole.png')
+
+main()
