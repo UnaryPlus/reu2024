@@ -63,7 +63,7 @@ basis = [ v.at(p_obs) for v in basis ]
 basis = [ v / sqrt(abs(dot(v, v))) for v in basis ]
 B_obs = M.tangent_space(p_obs).basis('B', from_family=basis)
 
-spheres = [ sphere(3, pi/4, pi, 1), sphere(0, 0, 0, 1.0001) ]
+spheres = [ sphere(3, pi/2, 5*pi/4, 1), sphere(0, 0, 0, 1.0001) ]
 integrate = geodesic_integrator(M, spheres)
 
 def local_color(v, s_max):
@@ -82,7 +82,7 @@ def local_color(v, s_max):
   else:
     raise Exception('An error occurred during integration.')
 
-WIDTH = 50
+WIDTH = 40
 
 def pixel_to_vector(i, j):
   # return value is not necessarily a unit vector
