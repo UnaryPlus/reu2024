@@ -1,6 +1,6 @@
 from scipy.integrate import solve_ivp
 from PIL import Image
-import line_profiler
+# import line_profiler
 
 def debug(msg, a, b):
   print(msg + ':', a)
@@ -91,7 +91,6 @@ def pixel_to_vector(i, j):
   z, x, y = WIDTH/4, i - WIDTH/2 + 0.5, j - WIDTH/2 + 0.5
   return (z * basis[1] + x * basis[2] + y * basis[3]) / WIDTH
 
-@line_profiler.profile
 def main():
   colors = []
   s_max = 40

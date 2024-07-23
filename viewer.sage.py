@@ -6,7 +6,7 @@ from sage.all_cmdline import *   # import sage library
 _sage_const_4 = Integer(4); _sage_const_0 = Integer(0); _sage_const_1 = Integer(1); _sage_const_2 = Integer(2); _sage_const_3 = Integer(3); _sage_const_5 = Integer(5); _sage_const_1p0001 = RealNumber('1.0001'); _sage_const_50 = Integer(50); _sage_const_0p5 = RealNumber('0.5'); _sage_const_40 = Integer(40)
 from scipy.integrate import solve_ivp
 from PIL import Image
-import line_profiler
+# import line_profiler
 
 def debug(msg, a, b):
   print(msg + ':', a)
@@ -97,7 +97,6 @@ def pixel_to_vector(i, j):
   z, x, y = WIDTH/_sage_const_4 , i - WIDTH/_sage_const_2  + _sage_const_0p5 , j - WIDTH/_sage_const_2  + _sage_const_0p5 
   return (z * basis[_sage_const_1 ] + x * basis[_sage_const_2 ] + y * basis[_sage_const_3 ]) / WIDTH
 
-@line_profiler.profile
 def main():
   colors = []
   s_max = _sage_const_40 
